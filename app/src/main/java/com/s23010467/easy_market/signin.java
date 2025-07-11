@@ -1,5 +1,6 @@
 package com.s23010467.easy_market;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -43,5 +45,13 @@ public class signin extends AppCompatActivity {
                         Color.parseColor("#3608ED"),
                 },null, Shader.TileMode.CLAMP);
         multicolorText.getPaint().setShader(text_shader);
+
+        // create navigation in SignIn to SignUp Activity...
+
+        CardView signup = findViewById(R.id.signupBtn);
+        signup.setOnClickListener(v -> {
+            Intent intent = new Intent(signin.this, signup.class);
+            startActivity(intent);
+        });
     }
 }
