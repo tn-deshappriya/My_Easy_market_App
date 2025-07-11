@@ -116,6 +116,7 @@
                 android:textSize="20dp"
                 android:textStyle="normal" />
 
+
             <EditText
                 android:id="@+id/editTextText2"
                 android:layout_width="300dp"
