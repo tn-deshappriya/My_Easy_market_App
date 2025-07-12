@@ -1,6 +1,8 @@
 package com.s23010467.easy_market;
 
+
 import android.content.Intent;
+
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -45,6 +47,7 @@ public class signin extends AppCompatActivity {
                         Color.parseColor("#3608ED"),
                 },null, Shader.TileMode.CLAMP);
         multicolorText.getPaint().setShader(text_shader);
+
 
         // create navigation in SignIn to SignUp Activity...
 
