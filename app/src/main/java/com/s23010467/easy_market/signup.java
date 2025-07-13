@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -53,6 +54,14 @@ public class signup extends AppCompatActivity {
         CardView signin = findViewById(R.id.signupSigninBtn);
         signin.setOnClickListener(v -> {
             Intent intent = new Intent(signup.this, signin.class);
+            startActivity(intent);
+        });
+
+        // Create Navigation to signUp to DashBoard Activity...
+
+        AppCompatButton signup = findViewById(R.id.signupBtn2);
+        signup.setOnClickListener(v -> {
+            Intent intent = new Intent(signup.this, dashboard.class);
             startActivity(intent);
         });
     }
