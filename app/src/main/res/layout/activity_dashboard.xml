@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".dashboard"
-    android:background="@color/white">
+    android:background="#FFF2F2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,8 +59,6 @@
             android:layout_height="60dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
                <LinearLayout
@@ -71,7 +69,7 @@
                    android:layout_gravity="center_vertical">
                    <EditText
                        android:layout_marginStart="20dp"
-                       android:layout_width="200dp"
+                       android:layout_width="190dp"
                        android:layout_height="match_parent"
                        android:backgroundTint="@color/white"
                        android:hint="Search..."
@@ -85,8 +83,8 @@
                        android:layout_height="match_parent"
                        android:background="@drawable/db_search_button_bg"
                        android:drawableLeft="@drawable/search_handle"
-                       android:paddingStart="25dp"
-                       android:paddingEnd="16dp"/>
+                       android:paddingStart="30dp"
+                       android:paddingEnd="10dp"/>
                </LinearLayout>
             <View
                 android:layout_width="wrap_content"
@@ -97,6 +95,193 @@
                 android:layout_height="45dp"
                 android:background="@drawable/mic"/>
         </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/db_func_btn_bg"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            app:cardCornerRadius="20dp">
+            <TextView
+                android:id="@+id/announsment"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="#4E37B2"
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:scrollHorizontally="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:maxLines="4"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="I'm thinira Nilushan Deshappriya.\n I'm In Sooriyawewa.\n I'm Open University Student.\n So, I'm Software Engineering Student.\n I have More Friends."/>
+        </FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/db_search_button_bg"/>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/time_button_bg"
+                    android:text="4.00 A.M"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#4E37B2"/>
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/time_button_bg"
+                    android:text="12.00 P.M"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#4E37B2"/>
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/time_button_bg"
+                    android:text="5.00 P.M"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#4E37B2"/>
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/time_button_bg"
+                    android:text="7.00 P.M"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#4E37B2"/>
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/time_button_bg"
+                    android:text="9.00 P.M"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#4E37B2"/>
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="420dp"
+         android:layout_marginTop="10dp"
+         android:layout_marginStart="10dp"
+         android:layout_marginEnd="10dp"
+         android:layout_gravity="center">
+         <FrameLayout
+             android:id="@+id/db_fav_market_list"
+             android:layout_width="180dp"
+             android:layout_height="250dp"
+             android:background="@drawable/fav_market"
+             android:layout_alignParentStart="true">
+             <TextView
+                 android:layout_width="160dp"
+                 android:layout_height="230dp"
+                 android:text="Fav Market\n List"
+                 android:textAlignment="center"
+                 android:textColor="#4E37B2"
+                 android:textStyle="bold"
+                 android:textSize="30dp"
+                 android:layout_gravity="center"
+                 android:gravity="center"/>
+         </FrameLayout>
+         <FrameLayout
+             android:id="@+id/db_find_market"
+             android:layout_width="180dp"
+             android:layout_height="160dp"
+             android:layout_alignEnd="@id/db_fav_market_list"
+             android:layout_alignParentEnd="true"
+             android:background="@drawable/find_market">
+             <TextView
+                 android:layout_width="160dp"
+                 android:layout_height="130dp"
+                 android:text="Find\n Nearest\n Market"
+                 android:textAlignment="center"
+                 android:textColor="#4E37B2"
+                 android:textStyle="bold"
+                 android:textSize="30dp"
+                 android:layout_gravity="center"
+                 android:gravity="center"/>
+         </FrameLayout>
+         <FrameLayout
+             android:id="@+id/db_cart"
+             android:layout_width="180dp"
+             android:layout_height="160dp"
+             android:background="@drawable/cart"
+             android:layout_alignParentBottom="true"
+             android:layout_alignBottom="@id/db_fav_market_list">
+             <TextView
+                 android:layout_width="160dp"
+                 android:layout_height="130dp"
+                 android:text="Cart"
+                 android:textAlignment="center"
+                 android:textColor="#4E37B2"
+                 android:textStyle="bold"
+                 android:textSize="30dp"
+                 android:layout_gravity="center"
+                 android:gravity="center"/>
+         </FrameLayout>
+         <FrameLayout
+             android:id="@+id/db_cal"
+             android:layout_width="180dp"
+             android:layout_height="250dp"
+             android:background="@drawable/cal"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentEnd="true">
+             <TextView
+                 android:layout_width="160dp"
+                 android:layout_height="230dp"
+                 android:text="Calculator"
+                 android:textAlignment="center"
+                 android:textColor="#4E37B2"
+                 android:textStyle="bold"
+                 android:textSize="30dp"
+                 android:layout_gravity="center"
+                 android:gravity="center"/>
+         </FrameLayout>
+     </RelativeLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
