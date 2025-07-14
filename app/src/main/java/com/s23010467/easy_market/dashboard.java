@@ -23,6 +23,7 @@ public class dashboard extends AppCompatActivity {
             return insets;
         });
 
+
         TextView announcementBanner = findViewById(R.id.announsment);
         announcementBanner.setSelected(true);
 
@@ -47,6 +48,5 @@ public class dashboard extends AppCompatActivity {
             }
         };
         handler.post(runnable);
-
     }
 }
