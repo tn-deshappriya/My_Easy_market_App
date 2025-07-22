@@ -2,4 +2,6 @@
     <string name="app_name">Easy_Market</string>
     <string name="multicolor_signin_text">SignIn</string>
     <string name="multicolor_signup_text">Sign Up</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

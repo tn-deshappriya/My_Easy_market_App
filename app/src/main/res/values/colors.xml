@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="purlpe_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EF</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <color name="home">#4E37B2</color>
+    <color name="settings">#C9379D</color>
+    <color name="notification">#AE7E0F</color>
+
+    <color name="home_20">#331190A6</color>
+    <color name="settings_20">#33C7369B</color>
+    <color name="notification_20">#33A8790F</color>
 </resources>
