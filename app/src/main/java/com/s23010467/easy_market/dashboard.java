@@ -71,7 +71,7 @@ public class dashboard extends AppCompatActivity {
 
                     // Selected notification Tab...
                     notificationTxt.setVisibility(View.VISIBLE);
-                    notificationImage.setImageResource(R.drawable.notification);
+                    notificationImage.setImageResource(R.drawable.notification_action);
                     notificationLayout.setBackgroundResource(R.drawable.round_bottom_back);
 
                     //  create animation
@@ -110,7 +110,7 @@ public class dashboard extends AppCompatActivity {
 
                     // Selected Home Tab...
                     homeTxt.setVisibility(View.VISIBLE);
-                    homeImage.setImageResource(R.drawable.home);
+                    homeImage.setImageResource(R.drawable.home_action);
                     homeLayout.setBackgroundResource(R.drawable.round_bottom_back);
 
                     //  create animation
@@ -149,7 +149,7 @@ public class dashboard extends AppCompatActivity {
 
                     // Selected Settings Tab...
                     settingsTxt.setVisibility(View.VISIBLE);
-                    settingsImage.setImageResource(R.drawable.settings);
+                    settingsImage.setImageResource(R.drawable.settings_action);
                     settingsLayout.setBackgroundResource(R.drawable.round_bottom_back);
 
                     //  create animation
