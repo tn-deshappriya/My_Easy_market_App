@@ -1,13 +1,19 @@
 package com.s23010467.easy_market;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -23,6 +29,7 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
@@ -88,6 +95,25 @@ public class HomeFragment extends Fragment {
         };
         handler.post(runnable);
 
+//        Set nevigation to profile Activity...
+
+        CardView db_profile = view.findViewById(R.id.db_profile);
+        db_profile.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), profile.class );
+            startActivity(intent);
+            onStop();
+        });
+
+        ImageView home_profile = view.findViewById(R.id.home_prof_icon);
+
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        String uriString = prefs.getString("profile_image_uri", null);
+
+        if (uriString != null) {
+            Uri imageUri = Uri.parse(uriString);
+            home_profile.setImageURI(imageUri);
+        }
         return view;
+
     }
 }

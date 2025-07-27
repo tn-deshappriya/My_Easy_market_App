@@ -33,6 +33,7 @@ android {
 
 dependencies {
 
+    implementation (libs.imagepicker)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
