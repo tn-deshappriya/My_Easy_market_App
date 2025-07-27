@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,7 +78,6 @@ public class profile extends AppCompatActivity {
                 .start();
     }
 
-
     // This method handles the result and sets the image to ImageView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -111,5 +109,4 @@ public class profile extends AppCompatActivity {
             }
         }
     }
-
 }
