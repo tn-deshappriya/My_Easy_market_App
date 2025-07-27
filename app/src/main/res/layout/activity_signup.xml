@@ -167,36 +167,35 @@
                 android:textSize="20dp"
                 android:textStyle="normal" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_user_btn"
+                <RadioGroup
+                    android:id="@+id/role_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:buttonTint="#4E37B2"
-                    android:text="User Account"
-                    android:textColor="#4E37B2"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <RadioButton
+                        android:id="@+id/radio_user_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:buttonTint="#4E37B2"
+                        android:text="I'm a User"
+                        android:textColor="#4E37B2"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/radio_admin_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="18dp"
-                    android:buttonTint="#4E37B2"
-                    android:text="Admin Account"
-                    android:textColor="#4E37B2"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
+                    <RadioButton
+                        android:id="@+id/radio_admin_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="70dp"
+                        android:buttonTint="#4E37B2"
+                        android:text="I'm a Admin"
+                        android:textColor="#4E37B2"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </RadioGroup>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

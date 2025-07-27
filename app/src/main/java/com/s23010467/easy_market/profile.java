@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -56,13 +60,22 @@ public class profile extends AppCompatActivity {
         profile_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImagePicker.with(profile.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                        .start();
+                if (ContextCompat.checkSelfPermission(profile.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    // Ask for camera permission
+                    ActivityCompat.requestPermissions(profile.this, new String[]{Manifest.permission.CAMERA}, 101);
+                } else {
+                    // Permission already granted
+                    openImagePicker();
+                }
             }
         });
+    }
+    private void openImagePicker() {
+        ImagePicker.with(profile.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
     }
 
     // This method handles the result and sets the image to ImageView
@@ -83,6 +96,17 @@ public class profile extends AppCompatActivity {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Image selection canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openImagePicker();
+            } else {
+                Toast.makeText(this, "Camera permission is required to select profile image", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
