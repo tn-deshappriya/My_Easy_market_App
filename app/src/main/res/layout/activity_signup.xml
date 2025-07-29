@@ -100,7 +100,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/entername"
                 android:layout_width="300dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="50dp"
@@ -117,7 +117,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextText4"
+                android:id="@+id/enteremail"
                 android:layout_width="300dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="35dp"
@@ -134,7 +134,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextText5"
+                android:id="@+id/password"
                 android:layout_width="300dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="30dp"
@@ -151,7 +151,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextText6"
+                android:id="@+id/enterconfirmPW"
                 android:layout_width="300dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="30dp"

@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.s23010467.easy_market"
     compileSdk = 35
-
+    viewBinding {
+        enable =true
+    }
     defaultConfig {
         applicationId = "com.s23010467.easy_market"
         minSdk = 24
@@ -41,6 +43,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

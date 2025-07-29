@@ -1,14 +1,20 @@
 package com.s23010467.easy_market;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
@@ -16,7 +22,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.s23010467.easy_market.databinding.ActivitySignupBinding;
+
 public class signup extends AppCompatActivity {
+    // Declare FireBaseAuth ...
+    private FirebaseAuth mAuth;
+
+    // Dataview binding ...
+
+    private ActivitySignupBinding binding;
 
     // Create a variable for signup multicolor..
     TextView multicolor_text;
@@ -25,12 +44,20 @@ public class signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_signup);
+
+        // binding initialize..
+        binding = ActivitySignupBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         // Asign values for variable...
 
@@ -51,18 +78,74 @@ public class signup extends AppCompatActivity {
 
         // Create navigation to signup to signin Activity page...
 
-        CardView signin = findViewById(R.id.signupSigninBtn);
-        signin.setOnClickListener(v -> {
-            Intent intent = new Intent(signup.this, signin.class);
-            startActivity(intent);
+        binding.signupSigninBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(signup.this, signin.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         // Create Navigation to signUp to DashBoard Activity...
 
-        AppCompatButton signup = findViewById(R.id.signupBtn2);
-        signup.setOnClickListener(v -> {
-            Intent intent = new Intent(signup.this, dashboard.class);
-            startActivity(intent);
+        binding.signupBtn2.setOnClickListener( v -> {
+
+            String name = binding.entername.getText().toString().trim();
+            String email = binding.enteremail.getText().toString().trim();
+            String password = binding.password.getText().toString().trim();
+            String confirmPW = binding.enterconfirmPW.getText().toString().trim();
+            Integer roleId = binding.roleRadioGroup.getCheckedRadioButtonId();
+
+            if (name.isEmpty()|| email.isEmpty()|| password.isEmpty()||confirmPW.isEmpty()){
+                Toast.makeText(signup.this,"Required To Fill All Fields.",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!password.equals(confirmPW)){
+                Toast.makeText(signup.this,"Password is Not Matched Check Again",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (roleId == -1){
+                Toast.makeText(signup.this,"Select Role Is Required",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            createAccount(email,password);
         });
+    }
+
+    // If User already Login then user navigate Dashboard auto..
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+           Intent intent = new Intent(signup.this, dashboard.class);
+           startActivity(intent);
+           finish();
+        }
+    }
+
+    // Account Create in FireBase Authentificatio...
+    public void createAccount(String email,String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(signup.this, dashboard.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(signup.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
