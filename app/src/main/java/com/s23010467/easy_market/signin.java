@@ -51,6 +51,8 @@ public class signin extends AppCompatActivity {
         binding = ActivitySigninBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Initialize FirebaseAuth...
+        mAuth = FirebaseAuth.getInstance();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -96,9 +98,10 @@ public class signin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            Toast.makeText(signin.this, "Welcome back, " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(signin.this, dashboard.class);
                             startActivity(intent);
                         } else {

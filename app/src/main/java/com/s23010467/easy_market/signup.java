@@ -1,7 +1,6 @@
 package com.s23010467.easy_market;
 
 import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -27,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.s23010467.easy_market.databinding.ActivitySignupBinding;
 
 public class signup extends AppCompatActivity {
@@ -136,6 +137,26 @@ public class signup extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            if (user != null) {
+                                // Get entered details from UI
+                                String name = binding.entername.getText().toString().trim();
+                                String role = (binding.roleRadioGroup.getCheckedRadioButtonId() == R.id.radio_admin_btn)
+                                        ? "Admin" : "Customer";
+
+                                // Initialize Database with my realtime regional URL
+                                FirebaseDatabase database = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+                                DatabaseReference usersRef = database.getReference("users");
+
+                                // Create a simple object to save
+                                User newUser = new User(name, email, role);
+
+                                // Save user details under UID
+                                usersRef.child(user.getUid()).setValue(newUser);
+                            }
+
+
                             Intent intent = new Intent(signup.this, dashboard.class);
                             startActivity(intent);
                             finish();

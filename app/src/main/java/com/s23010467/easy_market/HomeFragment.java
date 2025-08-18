@@ -15,6 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,24 +105,40 @@ public class HomeFragment extends Fragment {
         };
         handler.post(runnable);
 
+        ImageView home_profile = view.findViewById(R.id.home_prof_icon);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseRef = FirebaseDatabase
+                .getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users");
+
+        if (currentUser != null) {
+            databaseRef.child(currentUser.getUid()).child("profileImageUrl")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            String imageUrl = snapshot.getValue(String.class);
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                // Use Picasso
+                                Picasso.get().load(imageUrl).into(home_profile);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            Toast.makeText(requireContext(), "Database Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
 //        Set nevigation to profile Activity...
 
         CardView db_profile = view.findViewById(R.id.db_profile);
+
         db_profile.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), profile.class );
+            Intent intent = new Intent(getActivity(), profile.class);
             startActivity(intent);
-            onStop();
         });
-
-        ImageView home_profile = view.findViewById(R.id.home_prof_icon);
-
-        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
-        String uriString = prefs.getString("profile_image_uri", null);
-
-        if (uriString != null) {
-            Uri imageUri = Uri.parse(uriString);
-            home_profile.setImageURI(imageUri);
-        }
         return view;
 
     }
