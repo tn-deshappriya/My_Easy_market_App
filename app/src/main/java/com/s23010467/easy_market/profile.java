@@ -107,6 +107,13 @@ public class profile extends AppCompatActivity {
                 .maxResultSize(1080, 1080)
                 .start();
     }
+    private void openImagePicker() {
+        ImagePicker.with(profile.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
+    }
 
     // This method handles the result and sets the image to ImageView
     @Override
@@ -143,7 +150,6 @@ public class profile extends AppCompatActivity {
                         }))
                 .addOnFailureListener(e -> Toast.makeText(profile.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
