@@ -107,13 +107,6 @@ public class profile extends AppCompatActivity {
                 .maxResultSize(1080, 1080)
                 .start();
     }
-    private void openImagePicker() {
-        ImagePicker.with(profile.this)
-                .crop()
-                .compress(1024)
-                .maxResultSize(1080, 1080)
-                .start();
-    }
 
     // This method handles the result and sets the image to ImageView
     @Override
