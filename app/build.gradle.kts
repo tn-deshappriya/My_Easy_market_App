@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.s23010467.easy_market"
     compileSdk = 35
-
+    viewBinding {
+        enable =true
+    }
     defaultConfig {
         applicationId = "com.s23010467.easy_market"
         minSdk = 24
@@ -33,14 +35,17 @@ android {
 }
 
 dependencies {
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
+    implementation(libs.picasso)
+    implementation(platform(libs.firebase.bom.v3410))
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.database)
+    implementation(libs.google.firebase.analytics)
     implementation (libs.imagepicker)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

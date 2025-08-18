@@ -20,9 +20,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class profile extends AppCompatActivity {
     ImageView profile_Image;
+    FirebaseUser currentUser;
+    StorageReference storageRef;
+    DatabaseReference databaseRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +44,11 @@ public class profile extends AppCompatActivity {
             return insets;
         });
 
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageRef = FirebaseStorage.getInstance().getReference("profile_images");
+        databaseRef = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users");
 //        Setup back button profile Activity to HomeFragment...
 
         ImageView prof_back_btn = findViewById(R.id.prof_back_btn);
@@ -48,11 +63,14 @@ public class profile extends AppCompatActivity {
 
 //        Set previously Saved image as a profile picture...
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        String imageUriString = sharedPreferences.getString("profile_image_uri", null);
-        if (imageUriString != null) {
-            Uri imageUri = Uri.parse(imageUriString);
-            profile_Image.setImageURI(imageUri);
+        if (currentUser != null) {
+            databaseRef.child(currentUser.getUid()).child("profileImageUrl")
+                    .get().addOnSuccessListener(dataSnapshot -> {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null) {
+                            Picasso.get().load(imageUrl).into(profile_Image);
+                        }
+                    });
         }
 
 //        Get Image using Camera or Gallery in Clicking profile image...
@@ -69,6 +87,25 @@ public class profile extends AppCompatActivity {
                 }
             }
         });
+
+        // 🚪 Logout button
+        ImageView logOutBtn = findViewById(R.id.log_out);
+        logOutBtn.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+
+            Intent intent = new Intent(profile.this, signin.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            Toast.makeText(profile.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
+        });
+    }
+    private void openImagePicker() {
+        ImagePicker.with(profile.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
     }
     private void openImagePicker() {
         ImagePicker.with(profile.this)
@@ -87,10 +124,9 @@ public class profile extends AppCompatActivity {
             Uri uri = data.getData();
             profile_Image.setImageURI(uri); // Set selected image to ImageView
 
-            getSharedPreferences("UserProfile", MODE_PRIVATE)
-                    .edit()
-                    .putString("profile_image_uri", uri.toString())
-                    .apply();
+            if (currentUser != null && uri != null) {
+                uploadImageToFirebase(uri);
+            }
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
@@ -98,6 +134,23 @@ public class profile extends AppCompatActivity {
             Toast.makeText(this, "Image selection canceled", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    private void uploadImageToFirebase(Uri uri) {
+        StorageReference fileRef = storageRef.child(currentUser.getUid() + ".jpg");
+
+        fileRef.putFile(uri)
+                .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
+                        .addOnSuccessListener(downloadUri -> {
+                            // Save URL to Realtime Database
+                            databaseRef.child(currentUser.getUid()).child("profileImageUrl")
+                                    .setValue(downloadUri.toString());
+
+                            Toast.makeText(profile.this, "Profile image updated!", Toast.LENGTH_SHORT).show();
+                        }))
+                .addOnFailureListener(e -> Toast.makeText(profile.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
