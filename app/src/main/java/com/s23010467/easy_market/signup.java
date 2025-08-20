@@ -156,10 +156,16 @@ public class signup extends AppCompatActivity {
                                 usersRef.child(user.getUid()).setValue(newUser);
                             }
 
-
-                            Intent intent = new Intent(signup.this, dashboard.class);
-                            startActivity(intent);
-                            finish();
+                            // If user is Admin then who must navigate Create Market Place and user is customer then who navigate Dashboard...
+                            String role = (binding.roleRadioGroup.getCheckedRadioButtonId()==R.id.radio_admin_btn)?"Admin":"Customer";
+                            if (role.equals("Admin")){
+                               Intent intent = new Intent(signup.this, CreateMarket.class);
+                               startActivity(intent);
+                               finish();
+                            }else { Intent intent = new Intent(signup.this, dashboard.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
