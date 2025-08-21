@@ -127,7 +127,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
         }
-
 //        Set nevigation to profile Activity...
 
         CardView db_profile = view.findViewById(R.id.db_profile);
