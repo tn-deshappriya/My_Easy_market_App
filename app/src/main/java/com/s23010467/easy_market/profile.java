@@ -75,7 +75,7 @@ public class profile extends AppCompatActivity {
                             Picasso.get().load(imageUrl).into(profile_Image);
                         }
                     });
-            // Load user's full name
+            // Load user's name
             databaseRef.child(currentUser.getUid()).child("name")
                     .get().addOnSuccessListener(dataSnapshot -> {
                         String name = dataSnapshot.getValue(String.class);
@@ -100,7 +100,7 @@ public class profile extends AppCompatActivity {
             }
         });
 
-        // 🚪 Logout button
+        //  Logout button
         ImageView logOutBtn = findViewById(R.id.log_out);
         logOutBtn.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
