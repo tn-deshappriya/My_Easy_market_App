@@ -15,10 +15,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CreateMarket extends AppCompatActivity {
 
     CardView create_market_btn;
     EditText Market_Name,Market_Address,Market_Contact;
+    Spinner spinner;
+    DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +36,11 @@ public class CreateMarket extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Firebase reference
+        dbRef = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places");
 
-        Spinner spinner = findViewById(R.id.spinnerCategory);
+
+        spinner = findViewById(R.id.spinnerCategory);
         Market_Name = findViewById(R.id.market_name);
         Market_Address = findViewById(R.id.market_address);
         Market_Contact = findViewById(R.id.market_contact);
@@ -42,11 +51,12 @@ public class CreateMarket extends AppCompatActivity {
             String market_address = Market_Address.getText().toString().trim();
             String market_contact = Market_Contact.getText().toString().trim();
             String market_category = spinner.getSelectedItem().toString();
+
             if(market_name.isEmpty()||market_address.isEmpty()||market_contact.isEmpty()||market_category.equals("Select Category")){
                 Toast.makeText(CreateMarket.this,"All Feilds Are Required To Register!",Toast.LENGTH_SHORT).show();
             }else {
-                Intent intent = new Intent(CreateMarket.this, dashboard.class);
-                startActivity(intent);
+                // call saveMarket method...
+                saveMarket(market_name, market_address, market_contact, market_category);
             }
         });
 
@@ -66,5 +76,40 @@ public class CreateMarket extends AppCompatActivity {
 // Default to "Select Category"
         spinner.setSelection(0, false);
 
+    }
+
+    // create saveMarket Method...
+    private void saveMarket(String market_name,String market_address,String market_contact,String market_category){
+
+        // setup unique marketID...
+        String marketId = dbRef.push().getKey();
+
+        // get AdminID....
+        String ownerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Create new Market Object...
+        Market market = new Market(
+                marketId,
+                market_name,
+                market_address,
+                market_contact,
+                market_category,
+                ownerId,
+                false // not verified yet
+        );
+
+        // Save to Firebase
+        dbRef.child(marketId).setValue(market).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(CreateMarket.this, "Market created successfully!", Toast.LENGTH_SHORT).show();
+
+                // setup navigation to dashboard...
+
+                startActivity(new Intent(CreateMarket.this, dashboard.class));
+                finish();
+            } else {
+                Toast.makeText(CreateMarket.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

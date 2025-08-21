@@ -127,7 +127,7 @@ public class signup extends AppCompatActivity {
         }
     }
 
-    // Account Create in FireBase Authentificatio...
+    // Account Create in FireBase Authentification...
     public void createAccount(String email,String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
