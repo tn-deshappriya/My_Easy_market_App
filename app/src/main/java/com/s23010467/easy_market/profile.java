@@ -36,6 +36,7 @@ public class profile extends AppCompatActivity {
     DatabaseReference databaseRef;
 
     TextView user_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +112,7 @@ public class profile extends AppCompatActivity {
 
             Toast.makeText(profile.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
         });
+
     }
     private void openImagePicker() {
         ImagePicker.with(profile.this)

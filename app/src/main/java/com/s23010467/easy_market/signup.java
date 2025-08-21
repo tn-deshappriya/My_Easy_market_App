@@ -128,6 +128,7 @@ public class signup extends AppCompatActivity {
     }
 
     // Account Create in FireBase Authentification...
+
     public void createAccount(String email,String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -166,7 +167,6 @@ public class signup extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
-
                         } else {
                             // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
