@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer gradient border with 3 colors -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <gradient
+                android:angle="0"
+                android:startColor="#FF00E6"
+                android:centerColor="#931EFF"
+                android:endColor="#3608ED"
+                android:type="linear"
+                android:useLevel="false" />
+        </shape>
+    </item>
+
+    <!-- Inner solid shape for white fill -->
+    <item android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="17dp" />
+        </shape>
+    </item>
+</layer-list>

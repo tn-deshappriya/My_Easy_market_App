@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
@@ -33,6 +34,9 @@ public class profile extends AppCompatActivity {
     FirebaseUser currentUser;
     StorageReference storageRef;
     DatabaseReference databaseRef;
+
+    TextView user_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,7 @@ public class profile extends AppCompatActivity {
             return insets;
         });
 
+        user_name = findViewById(R.id.user_name);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("profile_images");
@@ -69,6 +74,14 @@ public class profile extends AppCompatActivity {
                         String imageUrl = dataSnapshot.getValue(String.class);
                         if (imageUrl != null) {
                             Picasso.get().load(imageUrl).into(profile_Image);
+                        }
+                    });
+            // Load user's full name
+            databaseRef.child(currentUser.getUid()).child("name")
+                    .get().addOnSuccessListener(dataSnapshot -> {
+                        String name = dataSnapshot.getValue(String.class);
+                        if (name != null) {
+                            user_name.setText(name);
                         }
                     });
         }
@@ -99,13 +112,7 @@ public class profile extends AppCompatActivity {
 
             Toast.makeText(profile.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
         });
-    }
-    private void openImagePicker() {
-        ImagePicker.with(profile.this)
-                .crop()
-                .compress(1024)
-                .maxResultSize(1080, 1080)
-                .start();
+
     }
     private void openImagePicker() {
         ImagePicker.with(profile.this)
