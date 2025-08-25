@@ -58,6 +58,7 @@ public class Add_new_item_to_market extends AppCompatActivity {
         back_btn = (AppCompatButton) findViewById(R.id.back_btn);
         add_to_market_btn = (AppCompatButton) findViewById(R.id.add_to_market_btn);
 
+
         add_to_market_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

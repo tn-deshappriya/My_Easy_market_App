@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class Market_Profile extends AppCompatActivity {
@@ -39,7 +41,11 @@ public class Market_Profile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Get current user id to check admin and user match then provide admin to their own market ... it check in my Add_new_item_to_market.java class...
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places");
+        Query adminMarketsQuery = databaseReference.orderByChild("ownerId").equalTo(currentUserId);
 
         // Assign recycleview values to variable ...
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -93,35 +99,78 @@ public class Market_Profile extends AppCompatActivity {
         });
 
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        adminMarketsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot marketSnapshot : snapshot.getChildren()) {
-                    // Get the market key
-                    marketId = marketSnapshot.getKey();
-                    Log.d("FirebaseData", "Market ID: " + marketId);
+                if (!snapshot.exists()) {
+                    Log.e("Market_Profile", "No market found for this admin.");
+                    return;
+                }
 
-                    // ---- CHANGE 2: Correct query path ----
-                    // Use market_places/{marketId}/items instead of market_places/items
+                // If only one market per admin, take the first
+                for (DataSnapshot marketSnapshot : snapshot.getChildren()) {
+                    marketId = marketSnapshot.getKey();
+                    Log.d("Market_Profile", "Market ID: " + marketId);
+
                     FirebaseRecyclerOptions<item_data_model> options =
                             new FirebaseRecyclerOptions.Builder<item_data_model>()
                                     .setQuery(databaseReference.child(marketId).child("items"), item_data_model.class)
                                     .build();
 
-                    // Create adapter and set it
                     ItemAdapter = new itemAdapter(options);
                     recyclerView.setAdapter(ItemAdapter);
-
-                    // ---- CHANGE 3: Start listening after adapter is created ----
                     ItemAdapter.startListening();
-                    break; // stop after first market; remove this if you want multiple
+
+                    break; // stop after first market
                 }
             }
 
+            @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseData", "Database error: " + error.getMessage());
+                Log.e("Market_Profile", "Database error: " + error.getMessage());
             }
         });
+
+        // Floating button: go to Add_new_item_to_market
+        floatingActionButton.setOnClickListener(v -> {
+            if (marketId != null) {
+                Intent intent = new Intent(Market_Profile.this, Add_new_item_to_market.class);
+                intent.putExtra("marketId", marketId);
+                startActivity(intent);
+            } else {
+                Log.e("Market_Profile", "Market ID is null");
+            }
+        });
+
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot marketSnapshot : snapshot.getChildren()) {
+//                    // Get the market key
+//                    marketId = marketSnapshot.getKey();
+//                    Log.d("FirebaseData", "Market ID: " + marketId);
+//
+//                    // ---- CHANGE 2: Correct query path ----
+//                    // Use market_places/{marketId}/items instead of market_places/items
+//                    FirebaseRecyclerOptions<item_data_model> options =
+//                            new FirebaseRecyclerOptions.Builder<item_data_model>()
+//                                    .setQuery(databaseReference.child(marketId).child("items"), item_data_model.class)
+//                                    .build();
+//
+//                    // Create adapter and set it
+//                    ItemAdapter = new itemAdapter(options);
+//                    recyclerView.setAdapter(ItemAdapter);
+//
+//                    // ---- CHANGE 3: Start listening after adapter is created ----
+//                    ItemAdapter.startListening();
+//                     //break; stop after first market; remove this if you want multiple
+//                }
+//            }
+//
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("FirebaseData", "Database error: " + error.getMessage());
+//            }
+//        });
 
 
 

@@ -125,10 +125,11 @@
                         android:background="@drawable/create_market_input_bg"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
-                        android:hint="Enter Discount eg:-(10%)"
+                        android:hint="Enter Discount eg:-(10.5)"
                         android:textAlignment="center"
                         android:textColor="#660ABC"
                         android:textColorHint="#BE96B3"
+                        android:inputType="numberDecimal"
                         android:textSize="20sp"/>
                     <EditText
                         android:id="@+id/lowest_price"
@@ -141,6 +142,7 @@
                         android:textAlignment="center"
                         android:textColor="#660ABC"
                         android:textColorHint="#BE96B3"
+                        android:inputType="numberDecimal"
                         android:textSize="20sp"/>
                     <EditText
                         android:id="@+id/highest_price"
@@ -153,6 +155,7 @@
                         android:textAlignment="center"
                         android:textColor="#660ABC"
                         android:textColorHint="#BE96B3"
+                        android:inputType="numberDecimal"
                         android:textSize="20sp"/>
                     <EditText
                         android:id="@+id/wholesale_price"
@@ -165,6 +168,7 @@
                         android:textAlignment="center"
                         android:textColor="#660ABC"
                         android:textColorHint="#BE96B3"
+                        android:inputType="numberDecimal"
                         android:textSize="20sp"/>
                     <EditText
                         android:id="@+id/retail_price"
@@ -177,6 +181,7 @@
                         android:textAlignment="center"
                         android:textColor="#660ABC"
                         android:textColorHint="#BE96B3"
+                        android:inputType="numberDecimal"
                         android:textSize="20sp"/>
                    <LinearLayout
                        android:layout_width="match_parent"
