@@ -121,6 +121,32 @@ public class profile extends AppCompatActivity {
         // update market data...
 
         updatemarket_data = findViewById(R.id.updatemarket_data);
+
+        // initialize viewholder to normal user Ux get best...
+        View placeholder = findViewById(R.id.updatemarket_placeholder);
+        updatemarket_data.setVisibility(View.GONE);
+        placeholder.setVisibility(View.VISIBLE); // normal user sees spacing
+
+        // check user is user or Admin if it is Admin then only visible...
+        if (currentUser != null) {
+            databaseRef.child(currentUser.getUid()).child("role")
+                    .get()
+                    .addOnSuccessListener(snapshot -> {
+                        String role = snapshot.getValue(String.class);
+                        if (role != null && role.equalsIgnoreCase("admin")) {
+                            updatemarket_data.setVisibility(View.VISIBLE);
+                        }
+                        // add viewholder to space manage in user account and admin acc...
+                        if (role != null && role.equalsIgnoreCase("admin")) {
+                            updatemarket_data.setVisibility(View.VISIBLE);
+                            placeholder.setVisibility(View.GONE); // admin sees card instead
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(profile.this, "Failed to fetch role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        }
+
         updatemarket_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

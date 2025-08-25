@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,6 +134,11 @@ public class HomeFragment extends Fragment {
 
         db_profile.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), profile.class);
+            startActivity(intent);
+        });
+        FrameLayout db_cal = view.findViewById(R.id.db_cal);
+        db_cal.setOnClickListener( v -> {
+            Intent intent = new Intent(getActivity(), calculator.class);
             startActivity(intent);
         });
         return view;

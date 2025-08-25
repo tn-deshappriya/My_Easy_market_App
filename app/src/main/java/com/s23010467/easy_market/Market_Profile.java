@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ public class Market_Profile extends AppCompatActivity {
     private String marketId;
     RecyclerView recyclerView;
     itemAdapter ItemAdapter;
+
+    ImageView back_to_home,back_to_profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +144,22 @@ public class Market_Profile extends AppCompatActivity {
                 Log.e("Market_Profile", "Market ID is null");
             }
         });
+
+        back_to_home = findViewById(R.id.market_prof_to_home);
+        back_to_home.setOnClickListener( v -> {
+            Intent intent = new Intent(Market_Profile.this,dashboard.class);
+            startActivity(intent);
+            finish();
+        });
+
+        back_to_profile = findViewById(R.id.back_to_profile);
+        back_to_profile.setOnClickListener(v -> {
+            Intent intent = new Intent(Market_Profile.this, profile.class);
+            startActivity(intent);
+            finish();
+        });
+
+
 
 //        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override

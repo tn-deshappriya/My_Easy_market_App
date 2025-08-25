@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Easy_Market"
         tools:targetApi="31">
         <activity
+            android:name=".calculator"
+            android:exported="false" />
+        <activity
             android:name=".Add_new_item_to_market"
             android:exported="false" />
         <activity
