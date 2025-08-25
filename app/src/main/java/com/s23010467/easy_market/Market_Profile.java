@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -15,8 +16,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,18 +47,23 @@ public class Market_Profile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // Get current user id to check admin and user match then provide admin to their own market ... it check in my Add_new_item_to_market.java class...
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places");
-        Query adminMarketsQuery = databaseReference.orderByChild("ownerId").equalTo(currentUserId);
+        floatingActionButton = findViewById(R.id.floatingActionButton1);
+        back_to_home = findViewById(R.id.market_prof_to_home);
+        back_to_profile = findViewById(R.id.back_to_profile);
+        TextView marketNameText = findViewById(R.id.market_name);
+        TextView adminNameText = findViewById(R.id.admin_name);
+        TextView adminContactText = findViewById(R.id.admin_contact);
+        ShapeableImageView adminProfileImage = findViewById(R.id.admin_prof_image);
 
         // Assign recycleview values to variable ...
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Get current user id to check admin and user match then provide admin to their own market ... it check in my Add_new_item_to_market.java class...
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference marketRef = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places");
+        Query adminMarketsQuery = marketRef.orderByChild("ownerId").equalTo(currentUserId);
 
-        floatingActionButton = findViewById(R.id.floatingActionButton1);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,9 +91,38 @@ public class Market_Profile extends AppCompatActivity {
                     marketId = marketSnapshot.getKey();
                     Log.d("Market_Profile", "Market ID: " + marketId);
 
+                    // Set market name and contact
+                    String marketName = marketSnapshot.child("market_name").getValue(String.class);
+                    String marketContact = marketSnapshot.child("market_contact").getValue(String.class);
+                    marketNameText.setText(marketName);
+                    adminContactText.setText(marketContact);
+                    // Fetch owner info
+                    String ownerId = marketSnapshot.child("ownerId").getValue(String.class);
+                    FirebaseDatabase.getInstance().getReference("users")
+                            .child(ownerId)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                                    if (userSnapshot.exists()) {
+                                        String ownerName = userSnapshot.child("name").getValue(String.class);
+                                        String profileImageUrl = userSnapshot.child("profileImageUrl").getValue(String.class);
+                                        adminNameText.setText(ownerName);
+
+                                        Glide.with(Market_Profile.this)
+                                                .load(profileImageUrl)
+                                                .placeholder(R.drawable.default_profile) // optional default
+                                                .into(adminProfileImage);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("Market_Profile", "Failed to fetch owner info: " + error.getMessage());
+                                }
+                            });
                     FirebaseRecyclerOptions<item_data_model> options =
                             new FirebaseRecyclerOptions.Builder<item_data_model>()
-                                    .setQuery(databaseReference.child(marketId).child("items"), item_data_model.class)
+                                    .setQuery(marketRef.child(marketId).child("items"), item_data_model.class)
                                     .build();
 
                     ItemAdapter = new itemAdapter(options);
@@ -114,7 +151,6 @@ public class Market_Profile extends AppCompatActivity {
         });
 
         // navigate to Dashboard...
-        back_to_home = findViewById(R.id.market_prof_to_home);
         back_to_home.setOnClickListener( v -> {
             Intent intent = new Intent(Market_Profile.this,dashboard.class);
             startActivity(intent);
@@ -123,12 +159,12 @@ public class Market_Profile extends AppCompatActivity {
 
         // Navigate to dashboard..
 
-        back_to_profile = findViewById(R.id.back_to_profile);
         back_to_profile.setOnClickListener(v -> {
             Intent intent = new Intent(Market_Profile.this, profile.class);
             startActivity(intent);
             finish();
         });
+
     }
 
     protected void onStart() {

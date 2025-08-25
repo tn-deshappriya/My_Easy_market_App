@@ -53,6 +53,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/market_image"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
