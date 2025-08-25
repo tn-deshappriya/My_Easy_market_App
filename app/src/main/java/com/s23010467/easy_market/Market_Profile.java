@@ -1,5 +1,6 @@
 package com.s23010467.easy_market;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,7 +38,9 @@ public class Market_Profile extends AppCompatActivity {
     RecyclerView recyclerView;
     itemAdapter ItemAdapter;
 
+    CardView set_market_location;
     ImageView back_to_home,back_to_profile;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,7 @@ public class Market_Profile extends AppCompatActivity {
         DatabaseReference marketRef = FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places");
         Query adminMarketsQuery = marketRef.orderByChild("ownerId").equalTo(currentUserId);
 
+        // create menu card..
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +153,12 @@ public class Market_Profile extends AppCompatActivity {
             } else {
                 Log.e("Market_Profile", "Market ID is null");
             }
+        });
+
+        set_market_location = findViewById(R.id.set_market_location);
+        set_market_location.setOnClickListener(v -> {
+            Intent intent = new Intent(Market_Profile.this, Create_market_location.class);
+            startActivity(intent);
         });
 
         // navigate to Dashboard...

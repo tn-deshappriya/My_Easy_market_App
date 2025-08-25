@@ -2,6 +2,7 @@ package com.s23010467.easy_market;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -11,9 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
-    Button btn;
-
+    private static final int SPLASH_DELAY = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +24,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-// Create Navigation to SignIn Page.
-
-        btn = findViewById(R.id.btn);
-        btn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,signin.class);
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(MainActivity.this, signin.class);
             startActivity(intent);
-        });
+            finish(); // finish splash so user can't go back to it
+        }, SPLASH_DELAY);
+
     }
 }

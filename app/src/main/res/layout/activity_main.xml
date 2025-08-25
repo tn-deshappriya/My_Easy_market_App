@@ -5,16 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/opening"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="Click Here"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+<!--    <ImageView-->
+<!--        android:id="@+id/open_image"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/opening"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
