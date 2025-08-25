@@ -12,6 +12,10 @@
         <item>Large - more than 200 sellers</item>
     </string-array>
 
+    <style name="Market_prof_img_bg_shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -35,10 +35,12 @@ android {
 }
 
 dependencies {
+    implementation(libs.glide)
     implementation(libs.picasso)
     implementation(platform(libs.firebase.bom.v3410))
     implementation(libs.firebase.storage)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.ui.database)
     implementation(libs.google.firebase.analytics)
     implementation (libs.imagepicker)
     implementation(libs.appcompat)

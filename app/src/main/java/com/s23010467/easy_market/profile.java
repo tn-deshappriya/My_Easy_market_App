@@ -1,5 +1,6 @@
 package com.s23010467.easy_market;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.pm.PackageManager;
+
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
@@ -36,7 +39,9 @@ public class profile extends AppCompatActivity {
     DatabaseReference databaseRef;
 
     TextView user_name;
+    CardView updatemarket_data;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +116,17 @@ public class profile extends AppCompatActivity {
             startActivity(intent);
 
             Toast.makeText(profile.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
+        });
+
+        // update market data...
+
+        updatemarket_data = findViewById(R.id.updatemarket_data);
+        updatemarket_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(profile.this,Market_Profile.class);
+                startActivity(intent);
+            }
         });
 
     }

@@ -135,6 +135,9 @@
                     android:focusable="true"/>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/updatemarket_data"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_marginTop="10dp"
                 android:layout_width="350dp"
                 android:layout_height="80dp"
@@ -150,9 +153,7 @@
                     android:gravity="center"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    android:textColor="#660ABC"
-                    android:clickable="true"
-                    android:focusable="true"/>
+                    android:textColor="#660ABC"/>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="10dp"
