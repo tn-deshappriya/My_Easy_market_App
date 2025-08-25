@@ -55,38 +55,6 @@ public class Market_Profile extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
-
-
-
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot marketSnapshot : snapshot.getChildren()) {
-//                    // Get the key as marketId
-//                    marketId = marketSnapshot.getKey(); // store in class-level variable
-//
-//                    // OR fetch from field "marketid" (your structure uses lowercase)
-//                    String marketIdField = marketSnapshot.child("marketid").getValue(String.class);
-//
-//                    Log.d("FirebaseData", "Market ID (Key): " + marketId);
-//                    Log.d("FirebaseData", "Market ID (Field): " + marketIdField);
-//
-//                    // If you only need the first market, break
-//                    break;
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("FirebaseData", "Database error: " + error.getMessage());
-//            }
-//        });
-
-
-
-
         floatingActionButton = findViewById(R.id.floatingActionButton1);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +113,7 @@ public class Market_Profile extends AppCompatActivity {
             }
         });
 
+        // navigate to Dashboard...
         back_to_home = findViewById(R.id.market_prof_to_home);
         back_to_home.setOnClickListener( v -> {
             Intent intent = new Intent(Market_Profile.this,dashboard.class);
@@ -152,56 +121,14 @@ public class Market_Profile extends AppCompatActivity {
             finish();
         });
 
+        // Navigate to dashboard..
+
         back_to_profile = findViewById(R.id.back_to_profile);
         back_to_profile.setOnClickListener(v -> {
             Intent intent = new Intent(Market_Profile.this, profile.class);
             startActivity(intent);
             finish();
         });
-
-
-
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot marketSnapshot : snapshot.getChildren()) {
-//                    // Get the market key
-//                    marketId = marketSnapshot.getKey();
-//                    Log.d("FirebaseData", "Market ID: " + marketId);
-//
-//                    // ---- CHANGE 2: Correct query path ----
-//                    // Use market_places/{marketId}/items instead of market_places/items
-//                    FirebaseRecyclerOptions<item_data_model> options =
-//                            new FirebaseRecyclerOptions.Builder<item_data_model>()
-//                                    .setQuery(databaseReference.child(marketId).child("items"), item_data_model.class)
-//                                    .build();
-//
-//                    // Create adapter and set it
-//                    ItemAdapter = new itemAdapter(options);
-//                    recyclerView.setAdapter(ItemAdapter);
-//
-//                    // ---- CHANGE 3: Start listening after adapter is created ----
-//                    ItemAdapter.startListening();
-//                     //break; stop after first market; remove this if you want multiple
-//                }
-//            }
-//
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("FirebaseData", "Database error: " + error.getMessage());
-//            }
-//        });
-
-
-
-
-
-
-//        FirebaseRecyclerOptions<item_data_model> options =
-//                new FirebaseRecyclerOptions.Builder<item_data_model>()
-//                        .setQuery(FirebaseDatabase.getInstance("https://my-easy-market-c4753-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("market_places").child("items"), item_data_model.class)
-//                        .build();
-//        ItemAdapter = new itemAdapter(options);
-//        recyclerView.setAdapter(ItemAdapter);
     }
 
     protected void onStart() {
