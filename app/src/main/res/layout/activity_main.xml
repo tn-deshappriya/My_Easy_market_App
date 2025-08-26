@@ -7,9 +7,5 @@
     android:layout_height="match_parent"
     android:background="@drawable/opening"
     tools:context=".MainActivity">
-<!--    <ImageView-->
-<!--        android:id="@+id/open_image"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/opening"/>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
