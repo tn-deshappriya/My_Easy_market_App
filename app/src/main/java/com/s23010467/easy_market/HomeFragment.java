@@ -141,6 +141,12 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), calculator.class);
             startActivity(intent);
         });
+
+        FrameLayout db_find_makets = view.findViewById(R.id.db_find_market);
+        db_find_makets.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), find_markets_in_map.class);
+            startActivity(intent);
+        });
         return view;
 
     }

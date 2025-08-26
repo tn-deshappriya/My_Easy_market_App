@@ -81,7 +81,7 @@ public class Create_market_location extends FragmentActivity implements OnMapRea
 
         // Move camera to a default location (e.g., Colombo)
         LatLng defaultLocation = new LatLng(6.9271, 79.8612);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f));
 
         // Set a click listener to place marker
         mMap.setOnMapClickListener(latLng -> {
