@@ -5,7 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/opening"
     tools:context=".MainActivity">
-
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/opening1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
